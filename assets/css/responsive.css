@@ -1,0 +1,58 @@
+/* =========================
+   MOBILE & TABLET
+   ========================= */
+@media (max-width: 600px) {
+
+    /* Header */
+    .header {
+        padding: 12px;
+    }
+
+    .logo {
+        font-size: 18px;
+    }
+
+    /* Icon menu 3 gạch */
+.menu-icon {
+    font-size: 30px;
+
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+    /* MENU: từ ngang -> dọc */
+    .menu {
+        flex-direction: column;
+    }
+
+    .menu a {
+        border-right: none;
+        border-bottom: 1px solid #555;
+        padding: 14px 0;
+        font-size: 16px;
+        margin: 0;
+    }
+
+    .menu a:last-child {
+        border-bottom: none;
+    }
+
+    /* Nội dung */
+    main {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    p {
+        font-size: 16px;
+    }
+
+    /* Banner */
+    .banner {
+        max-width: 100%;
+        height: auto;
+    }
+}
