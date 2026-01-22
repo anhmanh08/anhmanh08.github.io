@@ -1,0 +1,81 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background: #333;
+    color: white;
+    padding: 15px;
+    position: relative;
+}
+
+nav a {
+    color: white;
+    margin-right: 15px;
+    text-decoration: none;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.banner {
+    width: 100%;
+    max-width: 600px;
+}
+
+.menu-icon {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 26px;
+    cursor: pointer;
+    user-select: none;
+	transition: transform 0.2s ease;
+}
+
+.menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #333;
+
+    display: flex;              /* QUAN TRỌNG */
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+
+    transition: 
+        opacity 0.3s ease,
+        transform 0.3s ease;
+}
+
+.menu a {
+    flex: 1;                     /* chia đều 3 phần */
+    text-align: center;
+    padding: 15px 0;
+    color: white;
+    text-decoration: none;
+    border-right: 1px solid #555;
+}
+
+.menu a:last-child {
+    border-right: none;
+}
+
+
+.menu.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+
+.menu-icon.open {
+    transform: rotate(90deg);  /* Khi menu mở → icon xoay */
+}
+
