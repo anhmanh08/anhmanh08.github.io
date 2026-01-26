@@ -138,7 +138,7 @@ nav a {
     font-weight: bold;
 }
 
-.meme-pagination {
+#memePage #memePagination {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -146,23 +146,23 @@ nav a {
     margin: 20px 0;
 }
 
-.meme-pagination button {
-    background: #222;
-    color: #ccc;
+#memePage #memePagination button {
+    background: #ff4757;
+    color: #fff;
     border: none;
     border-radius: 8px;
     padding: 6px 12px;
     cursor: pointer;
 }
 
-.meme-pagination button.active {
+#memePage #memePagination button.active {
     background: #1e90ff;
     color: white;
     font-weight: bold;
 }
 
-.meme-pagination button:hover {
-    background: #444;
+#memePage #memePagination button:hover {
+    background: #ff6b81;
 }
 
 
