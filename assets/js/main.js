@@ -42,3 +42,32 @@ function handleMenuClick(pageId) {
 window.addEventListener("load", () => {
     showPage("home");
 });
+
+function initMemePage() {
+  const grid = document.getElementById("memeGrid");
+  if (!grid) return;
+
+  const TOTAL_MEMES = 1;
+
+  for (let i = 1; i <= TOTAL_MEMES; i++) {
+    const imgSrc = `/assets/images/mm${i}.jpg`;
+    const soundSrc = `/assets/sounds/smm${i}.mp3`;
+
+    const card = document.createElement("div");
+    card.className = "meme-card";
+
+    const audioId = "sound" + i;
+
+    card.innerHTML = `
+      <img src="${imgSrc}" alt="Meme ${i}">
+      <h3>Meme #${i}</h3>
+      <audio id="${audioId}" src="${soundSrc}"></audio>
+      <button onclick="document.getElementById('${audioId}').play()">
+        ▶ Phát
+      </button>
+    `;
+
+    grid.appendChild(card);
+  }
+}
+
