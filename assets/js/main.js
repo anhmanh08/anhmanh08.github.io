@@ -25,15 +25,22 @@ function showPage(pageId) {
 }
 
 function handleMenuClick(pageId) {
-    // Nếu bạn dùng web không reload (showPage)
     if (typeof showPage === "function") {
         showPage(pageId);
+    }
+
+    // Nếu là trang meme thì auto load lại meme
+    if (pageId === "meme") {
+        setTimeout(() => {
+            if (typeof loadMemesFromStorage === "function") {
+                loadMemesFromStorage();
+            }
+        }, 200);
     }
 
     const menu = document.getElementById("menu");
     const icon = document.getElementById("menuIcon");
 
-    // Đóng menu
     menu.classList.remove("show");
     icon.classList.remove("open");
     icon.textContent = "☰";
@@ -119,4 +126,5 @@ function renderMeme(meme) {
 }
 window.addMeme = addMeme;
 window.loadMemesFromStorage = loadMemesFromStorage;
+
 
