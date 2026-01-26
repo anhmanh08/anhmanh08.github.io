@@ -44,32 +44,79 @@ window.addEventListener("load", () => {
     showPage("home");
 });
 
+let currentMemePage = 1;
+
 function initMemePage() {
   const grid = document.getElementById("memeGrid");
   if (!grid) return;
 
-  const TOTAL_MEMES = 1;
+  const TOTAL_MEMES = 200; // <<< tổng số meme bạn có
 
-  for (let i = 1; i <= TOTAL_MEMES; i++) {
-    const imgSrc = `/assets/images/mm${i}.jpg`;
-    const soundSrc = `/assets/sounds/smm${i}.mp3`;
+  const isMobile = window.innerWidth <= 768;
 
-    const card = document.createElement("div");
-    card.className = "meme-card";
+  const memesPerRow = isMobile ? 3 : 7;
+  const maxRows = isMobile ? 20 : 25;
+  const memesPerPage = memesPerRow * maxRows;
 
-    const audioId = "sound" + i;
+  const totalPages = Math.ceil(TOTAL_MEMES / memesPerPage);
 
-    card.innerHTML = `
-      <img src="${imgSrc}" alt="Meme ${i}">
-      <h3>Meme #${i}</h3>
-      <audio id="${audioId}" src="${soundSrc}"></audio>
-      <button onclick="document.getElementById('${audioId}').play()">
-        ▶ Phát
-      </button>
-    `;
+  function renderPage(page) {
+    grid.innerHTML = "";
 
-    grid.appendChild(card);
+    const start = (page - 1) * memesPerPage + 1;
+    const end = Math.min(start + memesPerPage - 1, TOTAL_MEMES);
+
+    for (let i = start; i <= end; i++) {
+      const imgSrc = `/assets/images/mm${i}.jpg`;
+      const soundSrc = `/assets/sounds/smm${i}.mp3`;
+
+      const card = document.createElement("div");
+      card.className = "meme-card";
+
+      const audioId = "sound" + i;
+
+      card.innerHTML = `
+        <img src="${imgSrc}" alt="Meme ${i}" style="width:100%; border-radius:8px;">
+        <h4>Meme #${i}</h4>
+        <audio id="${audioId}" src="${soundSrc}"></audio>
+        <button onclick="document.getElementById('${audioId}').play()">
+          ▶
+        </button>
+      `;
+
+      grid.appendChild(card);
+    }
+
+    const pageInfo = document.getElementById("pageInfo");
+    if (pageInfo) {
+      pageInfo.textContent = `Trang ${page} / ${totalPages}`;
+    }
+  }
+
+  renderPage(currentMemePage);
+
+  const prevBtn = document.getElementById("prevPage");
+  const nextBtn = document.getElementById("nextPage");
+
+  if (prevBtn) {
+    prevBtn.onclick = () => {
+      if (currentMemePage > 1) {
+        currentMemePage--;
+        renderPage(currentMemePage);
+      }
+    };
+  }
+
+  if (nextBtn) {
+    nextBtn.onclick = () => {
+      if (currentMemePage < totalPages) {
+        currentMemePage++;
+        renderPage(currentMemePage);
+      }
+    };
   }
 }
+
+
 
 
