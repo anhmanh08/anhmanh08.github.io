@@ -17,8 +17,12 @@ function showPage(pageId) {
         .then(res => res.text())
         .then(html => {
             document.getElementById("content").innerHTML = html;
-			initMemePage();
+
+            if (pageId === "meme") {
+                initMemePage();
+            }
         })
+
         .catch(err => {
             document.getElementById("content").innerHTML = "<p>Lỗi tải trang</p>";
             console.error(err);
@@ -46,13 +50,11 @@ window.addEventListener("load", () => {
 
 let currentMemePage = 1;
 
-let currentMemePage = 1;
-
 function initMemePage() {
   const grid = document.getElementById("memeGrid");
   if (!grid) return;
 
-  const TOTAL_MEMES = 1000; // để cao, chỉ hiện meme có thật
+  const TOTAL_MEMES = 10; // để cao, chỉ hiện meme có thật
 
   const isMobile = window.innerWidth <= 768;
 
@@ -141,3 +143,4 @@ function initMemePage() {
     };
   }
 }
+
