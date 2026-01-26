@@ -17,6 +17,7 @@ function showPage(pageId) {
         .then(res => res.text())
         .then(html => {
             document.getElementById("content").innerHTML = html;
+			initMemePage();
         })
         .catch(err => {
             document.getElementById("content").innerHTML = "<p>Lỗi tải trang</p>";
@@ -70,4 +71,5 @@ function initMemePage() {
     grid.appendChild(card);
   }
 }
+
 
