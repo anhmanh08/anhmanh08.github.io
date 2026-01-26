@@ -1,26 +1,70 @@
-<h1>Trang Meme</h1>
-<p>Upload meme ảnh + âm thanh tại đây </p>
+<h1>🔥 Kho Meme</h1>
+<p>Meme được load tự động theo thứ tự mmX + smmX 😎</p>
 
-<div style="margin-bottom:20px;">
-  <input type="file" id="memeImg" accept="image/*">
-  <input type="file" id="memeSound" accept="audio/*">
-  <br><br>
-  <button onclick="addMeme()">➕ Thêm Meme</button>
-</div>
+<style>
+  .meme-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
 
-<hr>
+  .meme-card {
+    background: #1e1e1e;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    text-align: center;
+  }
 
-<div id="memeGrid" style="
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 15px;
-">
-</div>
+  .meme-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .meme-card h3 {
+    margin: 10px 0 5px;
+    font-size: 15px;
+  }
+
+  .meme-card button {
+    margin: 10px 0 15px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 20px;
+    background: #00ffcc;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+
+<div class="meme-grid" id="memeGrid"></div>
+
 <script>
-  setTimeout(() => {
-    if (typeof loadMemesFromStorage === "function") {
-      loadMemesFromStorage();
-    }
-  }, 100);
-</script>
+  // 🔴 CHỈ CẦN ĐỔI SỐ NÀY
+  const TOTAL_MEMES = 1; // ví dụ bạn có 20 meme
 
+  const grid = document.getElementById("memeGrid");
+
+  for (let i = 1; i <= TOTAL_MEMES; i++) {
+    const imgSrc = `images/mm${i}.jpg`;
+    const soundSrc = `sounds/smm${i}.mp3`;
+
+    const card = document.createElement("div");
+    card.className = "meme-card";
+
+    const audioId = "sound" + i;
+
+    card.innerHTML = `
+      <img src="${imgSrc}" alt="Meme ${i}">
+      <h3>Meme #${i}</h3>
+      <audio id="${audioId}" src="${soundSrc}"></audio>
+      <button onclick="document.getElementById('${audioId}').play()">
+        ▶ Phát
+      </button>
+    `;
+
+    grid.appendChild(card);
+  }
+</script>
