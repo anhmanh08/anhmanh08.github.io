@@ -53,8 +53,9 @@ let currentMemePage = 1;
 function initMemePage() {
   const grid = document.getElementById("memeGrid");
   const pagination = document.getElementById("memePagination");
+  const loadingEl = document.getElementById("memeLoading");
   if (!grid || !pagination) return;
-
+  if (loadingEl) loadingEl.style.display = "block";
   const isMobile = window.innerWidth <= 768;
   const memesPerRow = isMobile ? 3 : 7;
   const maxRows = isMobile ? 20 : 25;
@@ -82,12 +83,15 @@ function initMemePage() {
     };
   }
 
-  function checkDone() {
-    if (loaded === MAX_MEMES) {
-      existingMemes.sort((a, b) => a - b);
-      renderPage(currentMemePage);
-    }
+function checkDone() {
+  if (loaded === MAX_MEMES) {
+    existingMemes.sort((a, b) => a - b);
+
+    if (loadingEl) loadingEl.style.display = "none";
+
+    renderPage(currentMemePage);
   }
+}
 
   function renderPage(page) {
     grid.innerHTML = "";
@@ -171,4 +175,5 @@ function initMemePage() {
     pagination.appendChild(makeBtn("Tiếp theo ›", currentMemePage + 1));
   }
 }
+
 
