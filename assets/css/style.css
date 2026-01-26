@@ -138,6 +138,34 @@ nav a {
     font-weight: bold;
 }
 
+.meme-pagination {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin: 20px 0;
+}
+
+.meme-pagination button {
+    background: #222;
+    color: #ccc;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.meme-pagination button.active {
+    background: #1e90ff;
+    color: white;
+    font-weight: bold;
+}
+
+.meme-pagination button:hover {
+    background: #444;
+}
+
+
 
 
 
