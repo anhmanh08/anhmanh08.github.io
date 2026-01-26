@@ -1,11 +1,11 @@
 <script>
-  const TOTAL_MEMES = 1; // số meme thật
+  const TOTAL_MEMES = 1;
 
   const grid = document.getElementById("memeGrid");
 
   for (let i = 1; i <= TOTAL_MEMES; i++) {
-    const imgSrc = `../assets/images/mm${i}.jpg`;
-    const soundSrc = `../assets/sounds/smm${i}.mp3`;
+    const imgSrc = `/assets/images/mm${i}.jpg`;
+    const soundSrc = `/assets/sounds/smm${i}.mp3`;
 
     const card = document.createElement("div");
     card.className = "meme-card";
@@ -24,4 +24,3 @@
     grid.appendChild(card);
   }
 </script>
-
