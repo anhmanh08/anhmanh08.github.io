@@ -42,6 +42,7 @@ function handleMenuClick(pageId) {
 window.addEventListener("load", () => {
     showPage("home");
 });
+
 function addMeme() {
     const imgInput = document.getElementById("memeImg");
     const soundInput = document.getElementById("memeSound");
@@ -59,10 +60,43 @@ function addMeme() {
         return;
     }
 
-    const imgURL = URL.createObjectURL(imgFile);
-    const soundURL = URL.createObjectURL(soundFile);
+    const readerImg = new FileReader();
+    const readerSound = new FileReader();
 
+    readerImg.onload = () => {
+        readerSound.onload = () => {
+            const memeData = {
+                img: readerImg.result,
+                sound: readerSound.result
+            };
+
+            saveMemeToStorage(memeData);
+            renderMeme(memeData);
+        };
+
+        readerSound.readAsDataURL(soundFile);
+    };
+
+    readerImg.readAsDataURL(imgFile);
+
+    imgInput.value = "";
+    soundInput.value = "";
+}
+
+function saveMemeToStorage(meme) {
+    const memes = JSON.parse(localStorage.getItem("memes") || "[]");
+    memes.push(meme);
+    localStorage.setItem("memes", JSON.stringify(memes));
+}
+
+function loadMemesFromStorage() {
+    const memes = JSON.parse(localStorage.getItem("memes") || "[]");
+    memes.forEach(meme => renderMeme(meme));
+}
+
+function renderMeme(meme) {
     const memeGrid = document.getElementById("memeGrid");
+    if (!memeGrid) return;
 
     const memeDiv = document.createElement("div");
     memeDiv.style.background = "#222";
@@ -71,19 +105,16 @@ function addMeme() {
     memeDiv.style.textAlign = "center";
 
     memeDiv.innerHTML = `
-        <img src="${imgURL}" style="width:100%; border-radius:8px;">
-        <p>Meme mới 😂</p>
-        <audio src="${soundURL}"></audio>
+        <img src="${meme.img}" style="width:100%; border-radius:8px;">
+        <p>Meme 😂</p>
+        <audio src="${meme.sound}"></audio>
         <button>Phát âm thanh</button>
     `;
 
     const audio = memeDiv.querySelector("audio");
     const btn = memeDiv.querySelector("button");
-
     btn.onclick = () => audio.play();
 
     memeGrid.appendChild(memeDiv);
-
-    imgInput.value = "";
-    soundInput.value = "";
 }
+
