@@ -97,6 +97,11 @@ function saveMemeToStorage(meme) {
 }
 
 function loadMemesFromStorage() {
+    const memeGrid = document.getElementById("memeGrid");
+    if (!memeGrid) return;
+
+    memeGrid.innerHTML = ""; // Xóa cũ để tránh bị nhân đôi
+
     const memes = JSON.parse(localStorage.getItem("memes") || "[]");
     memes.forEach(meme => renderMeme(meme));
 }
@@ -126,5 +131,6 @@ function renderMeme(meme) {
 }
 window.addMeme = addMeme;
 window.loadMemesFromStorage = loadMemesFromStorage;
+
 
 
