@@ -84,4 +84,40 @@ nav a {
 .menu-icon.open {
     transform: translateY(-50%) rotate(90deg);
 }
+/* =========================
+   MEME GRID - CHUNG
+   ========================= */
+
+#memeGrid {
+    display: grid;
+    gap: 12px;
+}
+
+.meme-card {
+    background: #111;
+    color: #fff;
+    padding: 8px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.meme-card img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.meme-card button {
+    margin-top: 6px;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 6px;
+    background: #ff4757;
+    color: white;
+    cursor: pointer;
+}
+
+.meme-card button:hover {
+    opacity: 0.8;
+}
+
 
