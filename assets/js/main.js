@@ -60,7 +60,7 @@ function initMemePage() {
   const maxRows = isMobile ? 20 : 25;
   const memesPerPage = memesPerRow * maxRows;
 
-  const MAX_MEMES = 1000; // số lớn, chỉ để quét
+  const MAX_MEMES = 10; // số lớn, chỉ để quét
   let existingMemes = [];
 
   // 🔍 QUÉT MEME THẬT
@@ -171,3 +171,4 @@ function initMemePage() {
     pagination.appendChild(makeBtn("Tiếp theo ›", currentMemePage + 1));
   }
 }
+
