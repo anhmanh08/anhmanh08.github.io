@@ -1,55 +1,11 @@
-<h1>🔥 Kho Meme</h1>
-<p>Meme được load tự động theo thứ tự mmX + smmX 😎</p>
-
-<style>
-  .meme-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-  }
-
-  .meme-card {
-    background: #1e1e1e;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-    text-align: center;
-  }
-
-  .meme-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-  }
-
-  .meme-card h3 {
-    margin: 10px 0 5px;
-    font-size: 15px;
-  }
-
-  .meme-card button {
-    margin: 10px 0 15px;
-    padding: 8px 14px;
-    border: none;
-    border-radius: 20px;
-    background: #00ffcc;
-    font-weight: bold;
-    cursor: pointer;
-  }
-</style>
-
-<div class="meme-grid" id="memeGrid"></div>
-
 <script>
-  // 🔴 CHỈ CẦN ĐỔI SỐ NÀY
-  const TOTAL_MEMES = 1; // ví dụ bạn có 20 meme
+  const TOTAL_MEMES = 21; // số meme thật
 
   const grid = document.getElementById("memeGrid");
 
   for (let i = 1; i <= TOTAL_MEMES; i++) {
-    const imgSrc = `images/mm${i}.jpg`;
-    const soundSrc = `sounds/smm${i}.mp3`;
+    const imgSrc = `../assets/images/mm${i}.jpg`;
+    const soundSrc = `../assets/sounds/smm${i}.mp3`;
 
     const card = document.createElement("div");
     card.className = "meme-card";
