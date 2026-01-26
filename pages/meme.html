@@ -1,0 +1,18 @@
+<h1>Trang Meme</h1>
+<p>Upload meme ảnh + âm thanh tại đây </p>
+
+<div style="margin-bottom:20px;">
+  <input type="file" id="memeImg" accept="image/*">
+  <input type="file" id="memeSound" accept="audio/*">
+  <br><br>
+  <button onclick="addMeme()">➕ Thêm Meme</button>
+</div>
+
+<hr>
+
+<div id="memeGrid" style="
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+">
+</div>
