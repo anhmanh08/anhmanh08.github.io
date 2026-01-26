@@ -55,22 +55,63 @@ function initMemePage() {
   const pagination = document.getElementById("memePagination");
   if (!grid || !pagination) return;
 
-  const TOTAL_MEMES = 1000; // để lớn, chỉ hiện meme có thật
-
   const isMobile = window.innerWidth <= 768;
   const memesPerRow = isMobile ? 3 : 7;
   const maxRows = isMobile ? 20 : 25;
   const memesPerPage = memesPerRow * maxRows;
 
-  const totalPages = Math.ceil(TOTAL_MEMES / memesPerPage);
+  const MAX_MEMES = 1000; // số lớn, chỉ để quét
+  let existingMemes = [];
+
+  // 🔍 QUÉT MEME THẬT
+  let loaded = 0;
+
+  for (let i = 1; i <= MAX_MEMES; i++) {
+    const img = new Image();
+    img.src = `/assets/images/mm${i}.jpg`;
+
+    img.onload = () => {
+      existingMemes.push(i);
+      loaded++;
+      checkDone();
+    };
+
+    img.onerror = () => {
+      loaded++;
+      checkDone();
+    };
+  }
+
+  function checkDone() {
+    if (loaded === MAX_MEMES) {
+      existingMemes.sort((a, b) => a - b);
+      renderPage(currentMemePage);
+    }
+  }
 
   function renderPage(page) {
     grid.innerHTML = "";
 
-    const start = (page - 1) * memesPerPage + 1;
-    const end = Math.min(start + memesPerPage - 1, TOTAL_MEMES);
+    const totalPages = Math.ceil(existingMemes.length / memesPerPage);
 
-    for (let i = start; i <= end; i++) {
+    // ⚠️ Nếu không có meme → ẨN HẾT PHÂN TRANG
+    if (existingMemes.length === 0) {
+      pagination.innerHTML = "<p>Chưa có meme nào 😢</p>";
+      return;
+    }
+
+    if (page > totalPages) page = totalPages;
+    if (page < 1) page = 1;
+
+    currentMemePage = page;
+
+    const startIndex = (page - 1) * memesPerPage;
+    const pageMemes = existingMemes.slice(
+      startIndex,
+      startIndex + memesPerPage
+    );
+
+    pageMemes.forEach(i => {
       const imgSrc = `/assets/images/mm${i}.jpg`;
       const soundSrc = `/assets/sounds/smm${i}.mp3`;
 
@@ -79,10 +120,6 @@ function initMemePage() {
 
       const img = document.createElement("img");
       img.src = imgSrc;
-      img.style.width = "100%";
-      img.style.borderRadius = "8px";
-
-      img.onerror = () => card.remove();
 
       const title = document.createElement("h4");
       title.textContent = `Meme #${i}`;
@@ -100,43 +137,37 @@ function initMemePage() {
       card.appendChild(btn);
 
       grid.appendChild(card);
-    }
+    });
 
-    renderPagination(page);
+    renderPagination(totalPages);
   }
 
-  function renderPagination(page) {
+  function renderPagination(totalPages) {
     pagination.innerHTML = "";
 
     const makeBtn = (text, p, active = false) => {
       const b = document.createElement("button");
       b.textContent = text;
-      b.className = "page-btn" + (active ? " active" : "");
-      b.onclick = () => {
-        currentMemePage = p;
-        renderPage(p);
-      };
+      b.className = active ? "active" : "";
+      b.onclick = () => renderPage(p);
       return b;
     };
 
-    // Trở về + Đầu
-    pagination.appendChild(makeBtn("‹ Trở về", Math.max(1, page - 1)));
+    pagination.appendChild(makeBtn("‹ Trở về", currentMemePage - 1));
     pagination.appendChild(makeBtn("Đầu", 1));
 
-    let start = Math.max(1, page - 4);
-    let end = Math.min(totalPages, page + 4);
+    let start = Math.max(1, currentMemePage - 4);
+    let end = Math.min(totalPages, currentMemePage + 4);
 
     if (start > 1) pagination.appendChild(document.createTextNode(" ... "));
 
     for (let i = start; i <= end; i++) {
-      pagination.appendChild(makeBtn(i, i, i === page));
+      pagination.appendChild(makeBtn(i, i, i === currentMemePage));
     }
 
     if (end < totalPages) pagination.appendChild(document.createTextNode(" ... "));
 
     pagination.appendChild(makeBtn("Cuối", totalPages));
-    pagination.appendChild(makeBtn("Tiếp theo ›", Math.min(totalPages, page + 1)));
+    pagination.appendChild(makeBtn("Tiếp theo ›", currentMemePage + 1));
   }
-
-  renderPage(currentMemePage);
 }
