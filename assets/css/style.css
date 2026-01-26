@@ -84,16 +84,17 @@ nav a {
 .menu-icon.open {
     transform: translateY(-50%) rotate(90deg);
 }
+
 /* =========================
-   MEME GRID - CHUNG
+   MEME PAGE ONLY (SAFE)
    ========================= */
 
-#memeGrid {
+#memePage #memeGrid {
     display: grid;
     gap: 12px;
 }
 
-.meme-card {
+#memePage .meme-card {
     background: #111;
     color: #fff;
     padding: 8px;
@@ -101,12 +102,12 @@ nav a {
     text-align: center;
 }
 
-.meme-card img {
+#memePage .meme-card img {
     width: 100%;
     border-radius: 8px;
 }
 
-.meme-card button {
+#memePage .meme-card button {
     margin-top: 6px;
     padding: 6px 10px;
     border: none;
@@ -116,13 +117,13 @@ nav a {
     cursor: pointer;
 }
 
-.meme-card button:hover {
+#memePage .meme-card button:hover {
     opacity: 0.8;
 }
 
-#prevPage,
-#nextPage {
-    display: inline-block !important;
+#memePage #prevPage,
+#memePage #nextPage {
+    display: inline-block;
     margin: 5px;
     padding: 8px 14px;
     background: #ff4757;
@@ -132,10 +133,12 @@ nav a {
     cursor: pointer;
 }
 
-#pageInfo {
+#memePage #pageInfo {
     color: white;
     font-weight: bold;
 }
+
+
 
 
 
