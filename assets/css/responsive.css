@@ -60,28 +60,20 @@
 /* 📱 Mobile */
 @media (max-width: 768px) {
     #memeGrid {
-        display: grid !important;
-        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    }
-
-    .meme-card {
-        width: 100% !important;
-        max-width: 100% !important;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
 /* 💻 Desktop */
 @media (min-width: 769px) {
     #memeGrid {
-        display: grid !important;
-        grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
-    }
-
-    .meme-card {
-        width: 100% !important;
-        max-width: 100% !important;
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
     }
 }
+
+
 
 
 
