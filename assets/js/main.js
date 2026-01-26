@@ -117,4 +117,6 @@ function renderMeme(meme) {
 
     memeGrid.appendChild(memeDiv);
 }
+window.addMeme = addMeme;
+window.loadMemesFromStorage = loadMemesFromStorage;
 
