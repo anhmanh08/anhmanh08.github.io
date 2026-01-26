@@ -46,11 +46,13 @@ window.addEventListener("load", () => {
 
 let currentMemePage = 1;
 
+let currentMemePage = 1;
+
 function initMemePage() {
   const grid = document.getElementById("memeGrid");
   if (!grid) return;
 
-  const TOTAL_MEMES = 200; // <<< tổng số meme bạn có
+  const TOTAL_MEMES = 1000; // để cao, chỉ hiện meme có thật
 
   const isMobile = window.innerWidth <= 768;
 
@@ -66,6 +68,8 @@ function initMemePage() {
     const start = (page - 1) * memesPerPage + 1;
     const end = Math.min(start + memesPerPage - 1, TOTAL_MEMES);
 
+    let shownCount = 0;
+
     for (let i = start; i <= end; i++) {
       const imgSrc = `/assets/images/mm${i}.jpg`;
       const soundSrc = `/assets/sounds/smm${i}.mp3`;
@@ -75,14 +79,35 @@ function initMemePage() {
 
       const audioId = "sound" + i;
 
-      card.innerHTML = `
-        <img src="${imgSrc}" alt="Meme ${i}" style="width:100%; border-radius:8px;">
-        <h4>Meme #${i}</h4>
-        <audio id="${audioId}" src="${soundSrc}"></audio>
-        <button onclick="document.getElementById('${audioId}').play()">
-          ▶
-        </button>
-      `;
+      const img = document.createElement("img");
+      img.src = imgSrc;
+      img.style.width = "100%";
+      img.style.borderRadius = "8px";
+
+      // 🔥 Nếu ảnh không tồn tại → ẨN meme
+      img.onerror = () => {
+        card.remove();
+      };
+
+      img.onload = () => {
+        shownCount++;
+      };
+
+      const title = document.createElement("h4");
+      title.textContent = `Meme #${i}`;
+
+      const audio = document.createElement("audio");
+      audio.id = audioId;
+      audio.src = soundSrc;
+
+      const btn = document.createElement("button");
+      btn.textContent = "▶";
+      btn.onclick = () => audio.play();
+
+      card.appendChild(img);
+      card.appendChild(title);
+      card.appendChild(audio);
+      card.appendChild(btn);
 
       grid.appendChild(card);
     }
@@ -116,7 +141,3 @@ function initMemePage() {
     };
   }
 }
-
-
-
-
