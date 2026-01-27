@@ -135,7 +135,7 @@ function checkDone() {
       img.src = imgSrc;
 
       const title = document.createElement("h4");
-      title.textContent = `Meme #${i}`;
+      title.textContent = memeNames[i] || `Meme #${i}`;
 
       const audio = document.createElement("audio");
       audio.src = soundSrc;
@@ -184,6 +184,7 @@ function checkDone() {
     pagination.appendChild(makeBtn("Tiếp theo ›", currentMemePage + 1));
   }
 }
+
 
 
 
