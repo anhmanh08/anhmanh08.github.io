@@ -61,7 +61,7 @@ function initMemePage() {
   const maxRows = isMobile ? 20 : 25;
   const memesPerPage = memesPerRow * maxRows;
 
-  const MAX_MEMES = 1000;
+  const MAX_MEMES = 10;
   let existingMemes = [];
   let memeNames = {};
 // LOAD TÊN MEME TỪ JSON
@@ -184,6 +184,7 @@ function checkDone() {
     pagination.appendChild(makeBtn("Tiếp theo ›", currentMemePage + 1));
   }
 }
+
 
 
 
