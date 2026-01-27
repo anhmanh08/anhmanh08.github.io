@@ -61,9 +61,18 @@ function initMemePage() {
   const maxRows = isMobile ? 20 : 25;
   const memesPerPage = memesPerRow * maxRows;
 
-  const MAX_MEMES = 10; // số lớn, chỉ để quét
+  const MAX_MEMES = 1000;
   let existingMemes = [];
-
+  let memeNames = {};
+// LOAD TÊN MEME TỪ JSON
+  fetch("/assets/meme-names.json")
+    .then(res => res.json())
+	.then(data => {
+      memeNames = data;
+    })
+	.catch(err => {
+      console.warn("Không load được meme-names.json", err);
+    });
   // 🔍 QUÉT MEME THẬT
   let loaded = 0;
 
@@ -175,5 +184,6 @@ function checkDone() {
     pagination.appendChild(makeBtn("Tiếp theo ›", currentMemePage + 1));
   }
 }
+
 
 
