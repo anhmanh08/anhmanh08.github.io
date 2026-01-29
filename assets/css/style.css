@@ -179,30 +179,64 @@ nav a {
     background: #ff6b81;
 }
 
-#randomDailyBtn {
-  background: #ff4757;
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 16px;
-  font-size: 16px;
-  cursor: pointer;
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
 
-#randomDailyBtn:hover {
-  background: #ff6b81;
+.popup-box {
+  background: #fff;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 420px;
+  overflow: hidden;
+  animation: popupScale 0.25s ease;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
-#dailyMemeBanner button {
-  background: #111;
-  color: #fff;
-  border: none;
+.popup-header {
+  background: #f2c94c;
+  padding: 12px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.popup-body {
+  padding: 16px;
+  text-align: center;
+}
+
+.popup-body img {
+  width: 100%;
+  max-height: 240px;
+  object-fit: contain;
   border-radius: 8px;
-  padding: 6px 14px;
+  margin-bottom: 10px;
+}
+
+.popup-footer {
+  padding: 12px;
+  text-align: center;
+}
+
+.popup-footer button {
+  background: #2d9cdb;
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 6px;
   cursor: pointer;
 }
 
-
+@keyframes popupScale {
+  from { transform: scale(0.8); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
 
 
 
