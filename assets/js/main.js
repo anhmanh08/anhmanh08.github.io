@@ -51,6 +51,8 @@ window.addEventListener("load", () => {
 let currentMemePage = 1;
 let existingMemes = [];
 let memeNames = {};
+let allMemesForRandom = [];
+
 
 function initMemePage() {
   existingMemes = [];
@@ -104,8 +106,15 @@ function checkDone() {
   if (loaded === MAX_MEMES) {
     existingMemes.sort((a, b) => a - b);
 
+    // ✅ BUILD DANH SÁCH CHO POPUP RANDOM
+    allMemesForRandom = existingMemes.map(i => ({
+      img: `/assets/images/mm${i}.jpg`,
+      title: memeNames[i] || `Meme #${i}`,
+      sound: `/assets/sounds/smm${i}.mp3`
+    }));
+
     if (loadingEl) loadingEl.style.display = "none";
-	if (randomBtn) randomBtn.disabled = false;
+    if (randomBtn) randomBtn.disabled = false;
 
     renderPage(currentMemePage);
   }
@@ -195,38 +204,65 @@ function checkDone() {
 }
 
 function randomDailyMeme() {
-  const banner = document.getElementById("dailyMemeBanner");
-  const imgEl = document.getElementById("dailyMemeImg");
-  const titleEl = document.getElementById("dailyMemeTitle");
-  const playBtn = document.getElementById("dailyMemePlay");
-
-  if (!existingMemes || existingMemes.length === 0) {
-    alert("Chưa có meme để random 😅");
+  if (!allMemesForRandom || allMemesForRandom.length === 0) {
+    alert("Chưa load xong meme 😅");
     return;
   }
 
-  const todayKey = new Date().toISOString().slice(0, 10);
-  const storageKey = "dailyMeme_" + todayKey;
+  const today = new Date().toDateString();
+  const last = localStorage.getItem("dailyMemeDate");
 
-  let memeId = localStorage.getItem(storageKey);
-
-  if (!memeId) {
-    const randIndex = Math.floor(Math.random() * existingMemes.length);
-    memeId = existingMemes[randIndex];
-    localStorage.setItem(storageKey, memeId);
+  if (last === today) {
+    // Đã random hôm nay → vẫn mở popup lại
+    openDailyPopupFromStorage();
+    return;
   }
 
-  imgEl.src = `/assets/images/mm${memeId}.jpg`;
-  titleEl.textContent = memeNames[memeId] || `Meme #${memeId}`;
+  const meme = allMemesForRandom[
+    Math.floor(Math.random() * allMemesForRandom.length)
+  ];
 
-  const audio = new Audio(`/assets/sounds/smm${memeId}.mp3`);
-  playBtn.onclick = () => audio.play();
+  localStorage.setItem("dailyMemeDate", today);
+  localStorage.setItem("dailyMemeImg", meme.img);
+  localStorage.setItem("dailyMemeTitle", meme.title);
+  localStorage.setItem("dailyMemeSound", meme.sound);
 
-  banner.style.display = "block";
-  banner.scrollIntoView({ behavior: "smooth" });
+  openDailyPopup(meme);
+  disableDailyBtn();
 }
 
+function openDailyPopup(meme) {
+  document.getElementById("popupMemeImg").src = meme.img;
+  document.getElementById("popupMemeTitle").innerText = meme.title;
+  document.getElementById("dailyMemePopup").style.display = "flex";
+}
 
+function openDailyPopupFromStorage() {
+  const meme = {
+    img: localStorage.getItem("dailyMemeImg"),
+    title: localStorage.getItem("dailyMemeTitle"),
+    sound: localStorage.getItem("dailyMemeSound")
+  };
 
+  if (!meme.img) return;
 
+  openDailyPopup(meme);
+}
 
+function closeDailyMemePopup() {
+  document.getElementById("dailyMemePopup").style.display = "none";
+}
+
+function disableDailyBtn() {
+  const btn = document.getElementById("randomDailyBtn");
+  if (btn) btn.disabled = true;
+}
+
+// Khoá nút nếu đã random hôm nay
+window.addEventListener("load", () => {
+  const today = new Date().toDateString();
+  const last = localStorage.getItem("dailyMemeDate");
+  if (last === today) {
+    disableDailyBtn();
+  }
+});
