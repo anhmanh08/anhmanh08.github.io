@@ -1,6 +1,32 @@
 <div id="memePage">
   <h1>Trang Meme</h1>
   <p>Kho meme</p>
+<!-- 🎲 RANDOM MEME TODAY -->
+<div id="dailyMemeControl" style="margin-bottom:16px; text-align:center;">
+  <button id="randomDailyBtn">🎲 Random Meme Hôm Nay</button>
+</div>
+
+<!-- 🔴 BẢNG THÔNG BÁO -->
+<div id="dailyMemeBanner" style="
+  display:none;
+  background:#d90429;
+  color:white;
+  padding:16px;
+  border-radius:12px;
+  margin-bottom:16px;
+  text-align:center;
+">
+  <h2>🎉 Meme của bạn ngày hôm nay!!!</h2>
+  <img id="dailyMemeImg" style="
+    width:100%;
+    max-height:240px;
+    object-fit:cover;
+    border-radius:10px;
+    margin:10px 0;
+  ">
+  <h3 id="dailyMemeTitle"></h3>
+  <button id="dailyMemePlay">▶ Phát</button>
+</div>
 
   <div id="memeGrid"></div>
 
@@ -16,4 +42,5 @@
 
   <div id="memePagination"></div>
 </div>
+
 
