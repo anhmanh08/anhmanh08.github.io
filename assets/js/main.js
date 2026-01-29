@@ -49,11 +49,20 @@ window.addEventListener("load", () => {
 });
 
 let currentMemePage = 1;
+let existingMemes = [];
+let memeNames = {};
 
 function initMemePage() {
+  existingMemes = [];
   const grid = document.getElementById("memeGrid");
   const pagination = document.getElementById("memePagination");
   const loadingEl = document.getElementById("memeLoading");
+  const randomBtn = document.getElementById("randomDailyBtn");
+  if (randomBtn) {
+    randomBtn.onclick = randomDailyMeme;
+	randomBtn.disabled = true;
+  }
+
   if (!grid || !pagination) return;
   if (loadingEl) loadingEl.style.display = "block";
   const isMobile = window.innerWidth <= 768;
@@ -62,8 +71,7 @@ function initMemePage() {
   const memesPerPage = memesPerRow * maxRows;
 
   const MAX_MEMES = 10;
-  let existingMemes = [];
-  let memeNames = {};
+	
 // LOAD TÊN MEME TỪ JSON
   fetch("/assets/meme-names.json")
     .then(res => res.json())
@@ -97,6 +105,7 @@ function checkDone() {
     existingMemes.sort((a, b) => a - b);
 
     if (loadingEl) loadingEl.style.display = "none";
+	if (randomBtn) randomBtn.disabled = false;
 
     renderPage(currentMemePage);
   }
@@ -183,6 +192,38 @@ function checkDone() {
     pagination.appendChild(makeBtn("Cuối", totalPages));
     pagination.appendChild(makeBtn("Tiếp theo ›", currentMemePage + 1));
   }
+}
+
+function randomDailyMeme() {
+  const banner = document.getElementById("dailyMemeBanner");
+  const imgEl = document.getElementById("dailyMemeImg");
+  const titleEl = document.getElementById("dailyMemeTitle");
+  const playBtn = document.getElementById("dailyMemePlay");
+
+  if (!existingMemes || existingMemes.length === 0) {
+    alert("Chưa có meme để random 😅");
+    return;
+  }
+
+  const todayKey = new Date().toISOString().slice(0, 10);
+  const storageKey = "dailyMeme_" + todayKey;
+
+  let memeId = localStorage.getItem(storageKey);
+
+  if (!memeId) {
+    const randIndex = Math.floor(Math.random() * existingMemes.length);
+    memeId = existingMemes[randIndex];
+    localStorage.setItem(storageKey, memeId);
+  }
+
+  imgEl.src = `/assets/images/mm${memeId}.jpg`;
+  titleEl.textContent = memeNames[memeId] || `Meme #${memeId}`;
+
+  const audio = new Audio(`/assets/sounds/smm${memeId}.mp3`);
+  playBtn.onclick = () => audio.play();
+
+  banner.style.display = "block";
+  banner.scrollIntoView({ behavior: "smooth" });
 }
 
 
