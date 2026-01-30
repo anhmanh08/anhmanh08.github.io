@@ -214,19 +214,32 @@ function checkDone() {
 }
 
 function randomDailyMeme() {
+  const today = new Date().toDateString();
+  const last = localStorage.getItem("dailyMemeDate");
+
+  // 🔒 ĐÃ RANDOM HÔM NAY → CHỈ MỞ POPUP, KHÔNG RANDOM LẠI
+  if (last === today) {
+    openDailyPopupFromStorage();
+    return;
+  }
+
   if (!allMemesForRandom || allMemesForRandom.length === 0) {
     alert("Chưa load xong meme 😅");
     return;
   }
 
-  const today = new Date().toDateString();
-  const last = localStorage.getItem("dailyMemeDate");
+  const meme = allMemesForRandom[
+    Math.floor(Math.random() * allMemesForRandom.length)
+  ];
 
-  if (last === today) {
-    // Đã random hôm nay → vẫn mở popup lại
-    openDailyPopupFromStorage();
-    return;
-  }
+  localStorage.setItem("dailyMemeDate", today);
+  localStorage.setItem("dailyMemeImg", meme.img);
+  localStorage.setItem("dailyMemeTitle", meme.title);
+  localStorage.setItem("dailyMemeSound", meme.sound);
+
+  openDailyPopup(meme);
+  disableDailyBtn();
+}
 
   const meme = allMemesForRandom[
     Math.floor(Math.random() * allMemesForRandom.length)
@@ -270,6 +283,7 @@ function disableDailyBtn() {
   btn.disabled = true;
   btn.innerText = "✅ Đã random hôm nay";
 }
+
 
 
 
