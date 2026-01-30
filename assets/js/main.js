@@ -63,16 +63,16 @@ function initMemePage() {
   if (randomBtn) {
     randomBtn.onclick = randomDailyMeme;
 	randomBtn.disabled = true;
-// 🔒 Nếu hôm nay đã random thì khoá nút ngay
   const today = new Date().toDateString();
   const last = localStorage.getItem("dailyMemeDate");
 
   if (last === today) {
     randomBtn.disabled = true;
+    randomBtn.innerText = "✅ Đã random hôm nay";
   } else {
     randomBtn.disabled = false;
+    randomBtn.innerText = "🎲 Random Meme Hôm Nay";
   }
-
   }
 
   if (!grid || !pagination) return;
@@ -265,8 +265,13 @@ function closeDailyMemePopup() {
 
 function disableDailyBtn() {
   const btn = document.getElementById("randomDailyBtn");
-  if (btn) btn.disabled = true;
+  if (!btn) return;
+
+  btn.disabled = true;
+  btn.innerText = "✅ Đã random hôm nay";
 }
+
+
 
 
 
