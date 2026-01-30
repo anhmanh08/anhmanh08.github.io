@@ -255,9 +255,18 @@ function randomDailyMeme() {
 }
 
 function openDailyPopup(meme) {
-  document.getElementById("popupMemeImg").src = meme.img;
-  document.getElementById("popupMemeTitle").innerText = meme.title;
-  document.getElementById("dailyMemePopup").style.display = "flex";
+  const popup = document.getElementById("dailyMemePopup");
+  if (!popup) return; // ✅ Không ở trang meme → bỏ qua
+
+  const img = document.getElementById("popupMemeImg");
+  const title = document.getElementById("popupMemeTitle");
+
+  if (!img || !title) return;
+
+  img.src = meme.img;
+  title.innerText = meme.title;
+
+  popup.style.display = "flex";
 }
 
 function openDailyPopupFromStorage() {
@@ -273,7 +282,10 @@ function openDailyPopupFromStorage() {
 }
 
 function closeDailyMemePopup() {
-  document.getElementById("dailyMemePopup").style.display = "none";
+  const popup = document.getElementById("dailyMemePopup");
+  if (!popup) return;
+
+  popup.style.display = "none";
 }
 
 function disableDailyBtn() {
@@ -283,6 +295,7 @@ function disableDailyBtn() {
   btn.disabled = true;
   btn.innerText = "✅ Đã random hôm nay";
 }
+
 
 
 
