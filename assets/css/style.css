@@ -48,6 +48,7 @@ nav a {
     top: 100%;
     left: 0;
     width: 100%;
+    z-index: 10000;
     background: #333;
 
     display: flex;              /* QUAN TRỌNG */
@@ -263,6 +264,7 @@ nav a {
   from { transform: scale(0.8); opacity: 0; }
   to   { transform: scale(1); opacity: 1; }
 }
+
 
 
 
