@@ -63,6 +63,16 @@ function initMemePage() {
   if (randomBtn) {
     randomBtn.onclick = randomDailyMeme;
 	randomBtn.disabled = true;
+// 🔒 Nếu hôm nay đã random thì khoá nút ngay
+  const today = new Date().toDateString();
+  const last = localStorage.getItem("dailyMemeDate");
+
+  if (last === today) {
+    randomBtn.disabled = true;
+  } else {
+    randomBtn.disabled = false;
+  }
+
   }
 
   if (!grid || !pagination) return;
@@ -258,11 +268,5 @@ function disableDailyBtn() {
   if (btn) btn.disabled = true;
 }
 
-// Khoá nút nếu đã random hôm nay
-window.addEventListener("load", () => {
-  const today = new Date().toDateString();
-  const last = localStorage.getItem("dailyMemeDate");
-  if (last === today) {
-    disableDailyBtn();
-  }
-});
+
+
