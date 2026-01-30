@@ -247,12 +247,21 @@ function openDailyPopup(meme) {
 
   const img = document.getElementById("popupMemeImg");
   const title = document.getElementById("popupMemeTitle");
+  const audio = document.getElementById("popupMemeAudio");
 
   if (!img || !title) return;
 
   img.src = meme.img;
   title.innerText = meme.title;
+  // 🔊 SET + AUTO PLAY SOUND
+  if (audio && meme.sound) {
+    audio.src = meme.sound;
+    audio.currentTime = 0;
 
+    audio.play().catch(err => {
+      console.warn("Autoplay bị chặn bởi trình duyệt:", err);
+    });
+  }
   popup.style.display = "flex";
 }
 
@@ -270,7 +279,15 @@ function openDailyPopupFromStorage() {
 
 function closeDailyMemePopup() {
   const popup = document.getElementById("dailyMemePopup");
+  const audio = document.getElementById("popupMemeAudio");
+
   if (!popup) return;
+
+  // 🔇 STOP SOUND
+  if (audio) {
+    audio.pause();
+    audio.currentTime = 0;
+  }
 
   popup.style.display = "none";
 }
@@ -282,6 +299,7 @@ function disableDailyBtn() {
   btn.disabled = true;
   btn.innerText = "✅ Đã random hôm nay";
 }
+
 
 
 
