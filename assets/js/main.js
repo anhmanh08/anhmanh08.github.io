@@ -55,6 +55,7 @@ let allMemesForRandom = [];
 
 
 function initMemePage() {
+  currentMemePage = 1;   // ✅ RESET PAGE
   existingMemes = [];
   const grid = document.getElementById("memeGrid");
   const pagination = document.getElementById("memePagination");
@@ -124,7 +125,6 @@ function checkDone() {
     }));
 
     if (loadingEl) loadingEl.style.display = "none";
-    if (randomBtn) randomBtn.disabled = false;
 
     renderPage(currentMemePage);
   }
@@ -282,6 +282,7 @@ function disableDailyBtn() {
   btn.disabled = true;
   btn.innerText = "✅ Đã random hôm nay";
 }
+
 
 
 
