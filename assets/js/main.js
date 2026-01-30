@@ -241,19 +241,6 @@ function randomDailyMeme() {
   disableDailyBtn();
 }
 
-  const meme = allMemesForRandom[
-    Math.floor(Math.random() * allMemesForRandom.length)
-  ];
-
-  localStorage.setItem("dailyMemeDate", today);
-  localStorage.setItem("dailyMemeImg", meme.img);
-  localStorage.setItem("dailyMemeTitle", meme.title);
-  localStorage.setItem("dailyMemeSound", meme.sound);
-
-  openDailyPopup(meme);
-  disableDailyBtn();
-}
-
 function openDailyPopup(meme) {
   const popup = document.getElementById("dailyMemePopup");
   if (!popup) return; // ✅ Không ở trang meme → bỏ qua
@@ -295,6 +282,7 @@ function disableDailyBtn() {
   btn.disabled = true;
   btn.innerText = "✅ Đã random hôm nay";
 }
+
 
 
 
