@@ -41,6 +41,7 @@ nav a {
     cursor: pointer;
     user-select: none;
     transition: transform 0.2s ease;
+    -webkit-tap-highlight-color: transparent; /* 🔥 chặn xanh mobile */
 }
 
 .menu {
@@ -274,6 +275,7 @@ nav a {
   from { transform: scale(0.8); opacity: 0; }
   to   { transform: scale(1); opacity: 1; }
 }
+
 
 
 
