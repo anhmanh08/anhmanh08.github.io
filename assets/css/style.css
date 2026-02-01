@@ -68,10 +68,20 @@ nav a {
     color: white;
     text-decoration: none;
     border-right: 1px solid #555;
+      /* 🔥 chặn highlight mobile */
+    -webkit-tap-highlight-color: transparent;
 }
 
 .menu a:last-child {
     border-right: none;
+}
+
+.menu a:visited,
+.menu a:active,
+.menu a:focus {
+    color: white;
+    background: transparent;
+    outline: none;
 }
 
 
@@ -264,6 +274,7 @@ nav a {
   from { transform: scale(0.8); opacity: 0; }
   to   { transform: scale(1); opacity: 1; }
 }
+
 
 
 
