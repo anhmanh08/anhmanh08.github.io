@@ -345,7 +345,7 @@ function initRenamePage() {
         }
     };
 
-     renameBtn.onclick = function () {
+     renameBtn.onclick = async function () {
 
     const replaceNumber = document.getElementById("replaceNumber").value;
     const findNumber = document.getElementById("findNumber").value;
@@ -360,29 +360,29 @@ function initRenamePage() {
         return;
     }
 
+    const zip = new JSZip();
+
     for (let file of matchedFiles) {
 
         const newName = file.name.replace(findNumber, replaceNumber);
 
-        const reader = new FileReader();
-
-        reader.onload = function (e) {
-
-            const blob = new Blob([e.target.result], { type: file.type });
-            const url = URL.createObjectURL(blob);
-
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = newName;
-
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-
-            URL.revokeObjectURL(url);
-        };
-
-        reader.readAsArrayBuffer(file);
+        const fileData = await file.arrayBuffer();
+        zip.file(newName, fileData);
     }
+
+    // Tạo file zip
+    const content = await zip.generateAsync({ type: "blob" });
+
+    const url = URL.createObjectURL(content);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "renamed_files.zip";
+
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    URL.revokeObjectURL(url);
 };
 }
