@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Website</title>
+
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
 </head>
@@ -16,21 +17,20 @@
     <div class="menu-icon" id="menuIcon" onclick="toggleMenu()">☰</div>
 
     <nav id="menu" class="menu">
-    <a href="#" onclick="handleMenuClick('home')">Trang chủ</a>
-    <a href="#" onclick="handleMenuClick('about')">Giới thiệu</a>
-    <a href="#" onclick="handleMenuClick('contact')">Liên hệ</a>
-	<a href="#" onclick="handleMenuClick('meme')">Meme</a>
-    <a href="#" onclick="handleMenuClick('rename')">Rename</a>
-	</nav>
-
+        <a href="#" onclick="handleMenuClick('home')">Trang chủ</a>
+        <a href="#" onclick="handleMenuClick('about')">Giới thiệu</a>
+        <a href="#" onclick="handleMenuClick('contact')">Liên hệ</a>
+        <a href="#" onclick="handleMenuClick('meme')">Meme</a>
+        <a href="#" onclick="handleMenuClick('rename')">Rename</a>
+    </nav>
 </header>
 
 <main id="content">
-    <!-- Nội dung sẽ được load bằng JS -->
 </main>
 
-
+<!-- JSZip phải nằm trước main.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="assets/js/main.js"></script>
+
 </body>
 </html>
-
