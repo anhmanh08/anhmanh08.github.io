@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-<meta charset="UTF-8">
-<title>Batch Rename</title>
-</head>
-<body>
-
 <h2>Batch Rename Tool</h2>
 
 <input type="file" id="fileInput" multiple><br><br>
@@ -17,24 +9,7 @@
 
 <br>
 <input type="text" id="replaceNumber" placeholder="Số thay thế"><br><br>
-<button id="renameBtn">Đổi tên & Tải về</button>
-
-<script>
-
-let matchedFiles = [];
-
-document.getElementById("previewBtn").addEventListener("click", function () {
-    const files = document.getElementById("fileInput").files;
-    const findNumber = document.getElementById("findNumber").value;
-    const fileList = document.getElementById("fileList");
-
-    fileList.innerHTML = "";
-    matchedFiles = [];
-
-    if (!files.length) {
-        alert("Chọn file trước 😅");
-        return;
-    }
+<button id="renameBtn">Đổi tên & Tải về</button>    }
 
     if (!findNumber) {
         alert("Nhập số cần tìm");
