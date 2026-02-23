@@ -370,3 +370,4 @@ function initRenamePage() {
         document.body.removeChild(link);
     }
 };
+}
