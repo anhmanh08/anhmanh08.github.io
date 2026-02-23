@@ -21,6 +21,9 @@ function showPage(pageId) {
             if (pageId === "meme") {
                 initMemePage();
             }
+			if (pageId === "rename") {
+    initRenamePage();
+			}
         })
 
         .catch(err => {
@@ -300,12 +303,70 @@ function disableDailyBtn() {
   btn.innerText = "✅ Đã random hôm nay";
 }
 
+function initRenamePage() {
 
+    let matchedFiles = [];
 
+    const previewBtn = document.getElementById("previewBtn");
+    const renameBtn = document.getElementById("renameBtn");
 
+    if (!previewBtn || !renameBtn) return;
 
+    previewBtn.onclick = function () {
+        const files = document.getElementById("fileInput").files;
+        const findNumber = document.getElementById("findNumber").value;
+        const fileList = document.getElementById("fileList");
 
+        fileList.innerHTML = "";
+        matchedFiles = [];
 
+        if (!files.length) {
+            alert("Chọn file trước 😅");
+            return;
+        }
 
+        if (!findNumber) {
+            alert("Nhập số cần tìm");
+            return;
+        }
 
+        for (let file of files) {
+            if (file.name.includes(findNumber)) {
+                matchedFiles.push(file);
 
+                const div = document.createElement("div");
+                div.textContent = file.name;
+                fileList.appendChild(div);
+            }
+        }
+
+        if (matchedFiles.length === 0) {
+            fileList.textContent = "Không tìm thấy file nào.";
+        }
+    };
+
+     renameBtn.onclick = function () {
+    const replaceNumber = document.getElementById("replaceNumber").value;
+    const findNumber = document.getElementById("findNumber").value;
+
+    if (!replaceNumber) {
+        alert("Nhập số thay thế 😎");
+        return;
+    }
+
+    if (matchedFiles.length === 0) {
+        alert("Không có file nào để đổi.");
+        return;
+    }
+
+    for (let file of matchedFiles) {
+        const newName = file.name.replace(findNumber, replaceNumber);
+
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(file); // dùng trực tiếp file
+        link.download = newName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+};
