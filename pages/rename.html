@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Batch Rename Tool</title>
+<style>
+body {
+  font-family: Arial;
+  text-align: center;
+  margin-top: 30px;
+}
+
+input, button {
+  padding: 8px;
+  margin: 8px;
+}
+
+.file-list {
+  margin-top: 20px;
+  text-align: left;
+  width: 90%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.file-item {
+  padding: 5px 0;
+}
+</style>
+</head>
+<body>
+
+<h2>Batch Rename - Thay Số Trong Tên File</h2>
+
+<input type="file" id="fileInput" multiple><br>
+
+<input type="text" id="findNumber" placeholder="Nhập số cần tìm"><br>
+<button onclick="previewFiles()">Nhận diện</button>
+
+<div class="file-list" id="fileList"></div>
+
+<input type="text" id="replaceNumber" placeholder="Nhập số thay thế"><br>
+<button onclick="renameFiles()">Đổi tên & Tải về</button>
+
+<script>
+let matchedFiles = [];
+
+function previewFiles() {
+    const files = document.getElementById("fileInput").files;
+    const findNumber = document.getElementById("findNumber").value;
+    const fileList = document.getElementById("fileList");
+
+    fileList.innerHTML = "";
+    matchedFiles = [];
+
+    if (!files.length) {
+        alert("Chọn file trước đã 😅");
+        return;
+    }
+
+    if (!findNumber) {
+        alert("Nhập số cần tìm");
+        return;
+    }
+
+    for (let file of files) {
+        if (file.name.includes(findNumber)) {
+            matchedFiles.push(file);
+
+            const div = document.createElement("div");
+            div.className = "file-item";
+            div.textContent = "✔ " + file.name;
+            fileList.appendChild(div);
+        }
+    }
+
+    if (matchedFiles.length === 0) {
+        fileList.innerHTML = "❌ Không tìm thấy file nào chứa số đó.";
+    }
+}
+
+function renameFiles() {
+    const replaceNumber = document.getElementById("replaceNumber").value;
+    const findNumber = document.getElementById("findNumber").value;
+
+    if (!replaceNumber) {
+        alert("Nhập số thay thế 😎");
+        return;
+    }
+
+    if (matchedFiles.length === 0) {
+        alert("Không có file nào để đổi.");
+        return;
+    }
+
+    for (let file of matchedFiles) {
+        const newName = file.name.replace(findNumber, replaceNumber);
+
+        const blob = new Blob([file], { type: file.type });
+        const link = document.createElement("a");
+
+        link.href = URL.createObjectURL(blob);
+        link.download = newName;
+        link.click();
+    }
+}
+</script>
+
+</body>
+</html>
