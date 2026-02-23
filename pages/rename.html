@@ -1,5 +1,7 @@
 <h2>Batch Rename Tool</h2>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
 <input type="file" id="fileInput" multiple><br><br>
 
 <input type="text" id="findNumber" placeholder="Số cần tìm"><br><br>
@@ -8,8 +10,28 @@
 <div id="fileList"></div>
 
 <br>
+
 <input type="text" id="replaceNumber" placeholder="Số thay thế"><br><br>
-<button id="renameBtn">Đổi tên & Tải về</button>    }
+<button id="renameBtn">Đổi tên & Tải về</button>
+
+<script>
+
+let matchedFiles = [];
+
+// PREVIEW
+document.getElementById("previewBtn").addEventListener("click", function () {
+
+    const files = document.getElementById("fileInput").files;
+    const findNumber = document.getElementById("findNumber").value;
+    const fileList = document.getElementById("fileList");
+
+    fileList.innerHTML = "";
+    matchedFiles = [];
+
+    if (!files.length) {
+        alert("Chọn file trước 😅");
+        return;
+    }
 
     if (!findNumber) {
         alert("Nhập số cần tìm");
@@ -31,7 +53,10 @@
     }
 });
 
-document.getElementById("renameBtn").addEventListener("click", function () {
+
+// RENAME + ZIP
+document.getElementById("renameBtn").addEventListener("click", async function () {
+
     const replaceNumber = document.getElementById("replaceNumber").value;
     const findNumber = document.getElementById("findNumber").value;
 
@@ -45,19 +70,20 @@ document.getElementById("renameBtn").addEventListener("click", function () {
         return;
     }
 
+    const zip = new JSZip();
+
     for (let file of matchedFiles) {
         const newName = file.name.replace(findNumber, replaceNumber);
-
-        const blob = new Blob([file], { type: file.type });
-        const link = document.createElement("a");
-
-        link.href = URL.createObjectURL(blob);
-        link.download = newName;
-        link.click();
+        const fileData = await file.arrayBuffer();
+        zip.file(newName, fileData);
     }
+
+    const content = await zip.generateAsync({ type: "blob" });
+
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(content);
+    link.download = "renamed_files.zip";
+    link.click();
 });
 
 </script>
-
-</body>
-</html>
