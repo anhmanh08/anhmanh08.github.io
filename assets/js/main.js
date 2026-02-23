@@ -359,15 +359,19 @@ function initRenamePage() {
         return;
     }
 
+    const fileList = document.getElementById("fileList");
+    fileList.innerHTML = "";
+
     for (let file of matchedFiles) {
         const newName = file.name.replace(findNumber, replaceNumber);
 
         const link = document.createElement("a");
-        link.href = URL.createObjectURL(file); // dùng trực tiếp file
+        link.href = URL.createObjectURL(file);
         link.download = newName;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        link.textContent = "⬇ Tải " + newName;
+        link.style.display = "block";
+        link.style.margin = "10px 0";
+
+        fileList.appendChild(link);
     }
 };
-}
