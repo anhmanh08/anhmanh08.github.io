@@ -375,3 +375,4 @@ function initRenamePage() {
         fileList.appendChild(link);
     }
 };
+}
