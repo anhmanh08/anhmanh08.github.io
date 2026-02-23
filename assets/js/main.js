@@ -346,6 +346,7 @@ function initRenamePage() {
     };
 
      renameBtn.onclick = function () {
+
     const replaceNumber = document.getElementById("replaceNumber").value;
     const findNumber = document.getElementById("findNumber").value;
 
@@ -359,20 +360,29 @@ function initRenamePage() {
         return;
     }
 
-    const fileList = document.getElementById("fileList");
-    fileList.innerHTML = "";
-
     for (let file of matchedFiles) {
+
         const newName = file.name.replace(findNumber, replaceNumber);
 
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(file);
-        link.download = newName;
-        link.textContent = "⬇ Tải " + newName;
-        link.style.display = "block";
-        link.style.margin = "10px 0";
+        const reader = new FileReader();
 
-        fileList.appendChild(link);
+        reader.onload = function (e) {
+
+            const blob = new Blob([e.target.result], { type: file.type });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = newName;
+
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+
+            URL.revokeObjectURL(url);
+        };
+
+        reader.readAsArrayBuffer(file);
     }
 };
 }
