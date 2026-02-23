@@ -2,50 +2,28 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Batch Rename Tool</title>
-<style>
-body {
-  font-family: Arial;
-  text-align: center;
-  margin-top: 30px;
-}
-
-input, button {
-  padding: 8px;
-  margin: 8px;
-}
-
-.file-list {
-  margin-top: 20px;
-  text-align: left;
-  width: 90%;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.file-item {
-  padding: 5px 0;
-}
-</style>
+<title>Batch Rename</title>
 </head>
 <body>
 
-<h2>Batch Rename - Thay Số Trong Tên File</h2>
+<h2>Batch Rename Tool</h2>
 
-<input type="file" id="fileInput" multiple><br>
+<input type="file" id="fileInput" multiple><br><br>
 
-<input type="text" id="findNumber" placeholder="Nhập số cần tìm"><br>
-<button onclick="previewFiles()">Nhận diện</button>
+<input type="text" id="findNumber" placeholder="Số cần tìm"><br><br>
+<button id="previewBtn">Nhận diện</button>
 
-<div class="file-list" id="fileList"></div>
+<div id="fileList"></div>
 
-<input type="text" id="replaceNumber" placeholder="Nhập số thay thế"><br>
-<button onclick="renameFiles()">Đổi tên & Tải về</button>
+<br>
+<input type="text" id="replaceNumber" placeholder="Số thay thế"><br><br>
+<button id="renameBtn">Đổi tên & Tải về</button>
 
 <script>
+
 let matchedFiles = [];
 
-function previewFiles() {
+document.getElementById("previewBtn").addEventListener("click", function () {
     const files = document.getElementById("fileInput").files;
     const findNumber = document.getElementById("findNumber").value;
     const fileList = document.getElementById("fileList");
@@ -54,7 +32,7 @@ function previewFiles() {
     matchedFiles = [];
 
     if (!files.length) {
-        alert("Chọn file trước đã 😅");
+        alert("Chọn file trước 😅");
         return;
     }
 
@@ -68,18 +46,17 @@ function previewFiles() {
             matchedFiles.push(file);
 
             const div = document.createElement("div");
-            div.className = "file-item";
-            div.textContent = "✔ " + file.name;
+            div.textContent = file.name;
             fileList.appendChild(div);
         }
     }
 
     if (matchedFiles.length === 0) {
-        fileList.innerHTML = "❌ Không tìm thấy file nào chứa số đó.";
+        fileList.textContent = "Không tìm thấy file nào.";
     }
-}
+});
 
-function renameFiles() {
+document.getElementById("renameBtn").addEventListener("click", function () {
     const replaceNumber = document.getElementById("replaceNumber").value;
     const findNumber = document.getElementById("findNumber").value;
 
@@ -103,7 +80,8 @@ function renameFiles() {
         link.download = newName;
         link.click();
     }
-}
+});
+
 </script>
 
 </body>
